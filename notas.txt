@@ -1,0 +1,11 @@
+
+
+
+
+
+
+
+chmod
+chown
+chgrp
+chmod 777 -R

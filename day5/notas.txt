@@ -1,0 +1,12 @@
+mkdir -p
+cp -r
+cp -ri
+cp -riv
+wc -lwc
+tail -n5
+tail -f
+head -5
+less
+more
+sort frutas | uniq
+sort frutas | uniq -c
