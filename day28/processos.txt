@@ -1,0 +1,14 @@
+ps -ef --forest
+htop
+sleep
+sleep & ---> segundo plano
+jobs --> ver planos
+kill -1 ---reinicia o processo SIGHUB
+kill -9 --> mata o processo forçadamente SIGKILL
+kill -15 --> solicita para qe o processo seja finalizado SIGTERM
+kill -19 --- > pausa o processo
+kill -18 --- > inicia o processo novamente
+nice --- definir uma proridade para um processo
+renice --> definir e prioridade ao mesmo tempo em que ele está funcionando
+sudo renice -n -20 -p <pid> -----> -20 é a prioridade mais alta
+
