@@ -9,11 +9,22 @@ services:
       - giropops
     environment:
       REDIS_HOST: redis
+    env_file:
+      - .env
     volumes:
-      - strigus:/strigus
+      - type: volume
+        source: strigus
+        target: /strigus
     depends_on:
       - redis
+    labels:
+      com.docker.description: "Giropops Senhas App"
+      com.docker.version: "1.0"
     deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
       resources:
         reservations:
           cpus: '0.25'
@@ -21,6 +32,16 @@ services:
         limits:
           cpus: '0.5'
           memory: 256M
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    devices:
+      - "/dev/usb:/dev/usb"
+
   redis:
     image: redis
     command: redis-server --appendonly yes
@@ -34,11 +55,27 @@ services:
       timeout: 5s
       retries: 3
       start_period: 10s
+    labels:
+      com.docker.description: "Redis Service"
+      com.docker.version: "1.0"
 
 networks:
   giropops:
     driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.20.0.0/16"
+    labels:
+      com.docker.description: "Giropops Network"
+      com.docker.version: "1.0"
 
 volumes:
   strigus:
     driver: local
+    driver_opts:
+      type: none
+      device: /home/yohrannes/repos-git//devops-base-linuxtips/day24
+      o: "bind"
+    labels:
+      com.docker.volume: "strigus_volume"
